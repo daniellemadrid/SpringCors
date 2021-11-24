@@ -17,14 +17,18 @@ public class GreetingController {
     private final AtomicLong counter = new AtomicLong(); // contador que conta as requisições
 
     @CrossOrigin(origins = "http://localhost:8080") // medidas de retrição para dizer onde eu posso acessar
-
     @GetMapping("/greeting") // método get que mapeia tudo oque vai na nossa uri
-
     public Greeting greeting(@RequestParam(required = false, defaultValue = "World") String name) {
         // passa um requestParam  (mapeia o  os parâmetros de requisição) que precisa ser falso
         System.out.println("==== get greeting ====");
         // retorna um novo novo greeting que se autoincrementa e que pode passar uma mensagem (template e um name)
         return new Greeting(counter.incrementAndGet(), String.format(template, name));
-    }
+    } // cors não global
 
+    @GetMapping("/greeting-javaconfig")
+    public Greeting greetingWithJavaconfig(@RequestParam(required = false, defaultValue = "World") String name) {
+        System.out.println("==== in greeting ====");
+        return new Greeting(counter.incrementAndGet(), String.format(template, name));
+// cross global
+    } // o que é cors global e não global?
 }
